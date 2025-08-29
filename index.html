@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+    <title>APK Download Card</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+        body {
+            margin: 0;
+            font-family: Nunito, Arial, Helvetica, sans-serif;
+            background: #ece9f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .card {
+            width: 380px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            background: #fff;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #12675D, #00CEB6);
+            /* background: linear-gradient(135deg, #00CEB6, #12675D); */
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .card-header img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 24px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-body h2 {
+            font-size: 18px;
+            margin: 0 0 8px 0;
+        }
+
+        .tags {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+
+        .tag {
+            background: #f3f4f6;
+            border-radius: 6px;
+            font-size: 12px;
+            padding: 4px 8px;
+            color: #374151;
+        }
+
+        .description {
+            font-size: 14px;
+            color: #4b5563;
+            margin-bottom: 16px;
+        }
+
+
+        .changelog {
+            font-size: 13px;
+            color: #374151;
+            background: #f3f4f6;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 16px;
+        }
+
+        .price-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .price {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .price strong {
+            font-size: 18px;
+            color: #111827;
+        }
+
+        .btn-download {
+            font-family: Nunito, Arial, Helvetica, sans-serif;
+            font-size: large;
+            font-weight: bold;
+            background: #12675D;
+            color: #fff;
+            border: none;
+            padding: 10px 40px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+        <div class="card-header">
+            <svg width="72" height="72" stroke-width="0" fill="none" viewBox="0 0 16 16"
+                class="hope-icon hope-c-XNyZK hope-c-PJLV hope-c-PJLV-idvLKnh-css" height="1em" width="1em"
+                xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+                <path fill="#fff"
+                    d="M14 6c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1V7c0-.55-.45-1-1-1zM2 6c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1V7c0-.55-.45-1-1-1zm1.5 5.5A1.5 1.5 0 0 0 5 13v2c0 .55.45 1 1 1s1-.45 1-1v-2h2v2c0 .55.45 1 1 1s1-.45 1-1v-2a1.5 1.5 0 0 0 1.5-1.5V6h-9v5.5zM12.472 5a4.5 4.5 0 0 0-2.025-3.276l.5-1.001a.5.5 0 0 0-.895-.447L9.55 1.28l-.13-.052a4.504 4.504 0 0 0-2.84 0l-.13.052L5.948.276a.5.5 0 0 0-.895.447l.5 1.001A4.499 4.499 0 0 0 3.528 5v.5H12.5V5h-.028zM6.5 4a.5.5 0 0 1-.001-1h.002A.5.5 0 0 1 6.5 4zm3 0a.5.5 0 0 1-.001-1h.003a.5.5 0 0 1-.001 1z">
+                </path>
+            </svg>
+        </div>
+        <div class="card-body">
+            <h2>ZMS ELD Application</h2>
+            <div class="tags">
+                <div class="tag" id="apkInfo"></div>
+            </div>
+            <br>
+            <div class="changelog">
+                <strong>What's new:</strong><br>
+                <ul>
+                    <li>UI update</li>
+                    <li>Minor bug fixes</li>
+                    <li>Performance improvements</li>
+                </ul>
+
+            </div>
+            <br>
+            <div class="price-row">
+                <button class="btn-download" id="downloadBtn">Download</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <script defer src="http://umami.kibrlar.uz/script.js" data-website-id="fe74f090-4c90-40b0-9af4-d53be19c29d3"></script>
+    <script>
+        async function fetchLatestApk() {
+            const baseUrl = "https://a.memfispro.uz/d/";
+            try {
+                const response = await fetch(baseUrl + "latest.json");
+                const data = await response.json();
+
+                const apkUrl = baseUrl + data.file;
+                const version = data.version;
+                
+
+                const response2 = await fetch(apkUrl, { method: "HEAD" });
+                const size = response2.headers.get("content-length");
+                const lastModified = response.headers.get("last-modified");
+
+                let sizeText = size ? (size / (1024 * 1024)).toFixed(2) + " MB" : "Unknown";
+                let dateText = lastModified ? new Date(lastModified).toLocaleDateString() : "Unknown";
+                document.getElementById("apkInfo").innerText = `Version: ${version} | Size: ${sizeText} | Updated: ${dateText}`;
+
+                document.getElementById("downloadBtn").addEventListener("click", () => {
+                    const a = document.createElement("a");
+                    a.href = apkUrl;
+                    a.download = "eld-app.apk";
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                });
+            } catch (err) {
+                document.getElementById("apkInfo").innerText = "Could not load APK info.";
+            }
+        }
+
+        fetchLatestApk();
+    </script>
+</body>
+
+</html>
