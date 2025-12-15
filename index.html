@@ -128,7 +128,7 @@
         <div class="card-body">
             <h2>ZMS ELD Application</h2>
             <div class="tags">
-                <div class="tag" id="apkInfo">Stable Version</div>
+                <div class="tag" id="apkInfo"></div>
             </div>
             <br>
             <div class="changelog">
@@ -142,10 +142,47 @@
             </div>
             <br>
             <div class="price-row">
-                <p>It's available on Google Play and App Store</p>
+                <button class="btn-download" id="downloadBtn">Download</button>
             </div>
         </div>
     </div>
+
+    
+    <script defer src="https://umami.kibrlar.uz/script.js" data-website-id="d0555871-55ba-411e-997c-14ec78e3e0bc"></script>
+    <script>
+        async function fetchLatestApk() {
+            const baseUrl = "https://a.memfispro.uz/d/";
+            try {
+                const response = await fetch(baseUrl + "latest.json");
+                const data = await response.json();
+
+                const apkUrl = baseUrl + data.file;
+                const version = data.version;
+                
+
+                const response2 = await fetch(apkUrl, { method: "HEAD" });
+                const size = response2.headers.get("content-length");
+                const lastModified = response.headers.get("last-modified");
+
+                let sizeText = size ? (size / (1024 * 1024)).toFixed(2) + " MB" : "Unknown";
+                let dateText = lastModified ? new Date(lastModified).toLocaleDateString() : "Unknown";
+                document.getElementById("apkInfo").innerText = `Version: ${version} | Size: ${sizeText} | Updated: ${dateText}`;
+
+                document.getElementById("downloadBtn").addEventListener("click", () => {
+                    const a = document.createElement("a");
+                    a.href = apkUrl;
+                    a.download = `zmseld_${version}.apk`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                });
+            } catch (err) {
+                document.getElementById("apkInfo").innerText = "Could not load APK info.";
+            }
+        }
+
+        fetchLatestApk();
+    </script>
 </body>
 
 </html>
