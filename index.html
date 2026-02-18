@@ -153,9 +153,6 @@
         async function fetchLatestApk() {
             const baseUrl = "https://github.com/zmseld/app-download-page/releases/download/v124/";
             try {
-                const response = await fetch(baseUrl + "latest.json");
-                const data = await response.json();
-
                 const apkUrl = baseUrl + 'zms-v124.apk';
                 const version = 'v124';
 
