@@ -156,17 +156,8 @@
                 const response = await fetch(baseUrl + "latest.json");
                 const data = await response.json();
 
-                const apkUrl = baseUrl + data.file;
-                const version = data.version;
-                
-
-                const response2 = await fetch(apkUrl, { method: "HEAD" });
-                const size = response2.headers.get("content-length");
-                const lastModified = response.headers.get("last-modified");
-
-                let sizeText = size ? (size / (1024 * 1024)).toFixed(2) + " MB" : "Unknown";
-                let dateText = lastModified ? new Date(lastModified).toLocaleDateString() : "Unknown";
-                document.getElementById("apkInfo").innerText = `Version: ${version} | Size: ${sizeText} | Updated: ${dateText}`;
+                const apkUrl = baseUrl + 'zms-v124.apk';
+                const version = 'v124';
 
                 document.getElementById("downloadBtn").addEventListener("click", () => {
                     const a = document.createElement("a");
